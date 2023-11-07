@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>損切りポイント計算</title>
+    <script>
+        function calculateStopLoss() {
+            // Xの値を取得
+            var assetValue = parseFloat(document.getElementById("assetValue").value);
+            
+            // Yの値を取得
+            var acceptableLossPercentage = parseFloat(document.getElementById("acceptableLossPercentage").value) / 100;
+            
+            // 損切りポイントを計算
+            var stopLossPoint = assetValue * acceptableLossPercentage;
+
+            // 結果を表示
+            document.getElementById("result").innerHTML = "損切りポイント: " + stopLossPoint + "円";
+        }
+    </script>
+</head>
+<body>
+    <h1>損切りポイント計算</h1>
+    <label for="assetValue">資産の値 (X):</label>
+    <input type="number" id="assetValue" step="0.01" required><br>
+
+    <label for="acceptableLossPercentage">許容損失範囲 (Y %):</label>
+    <input type="number" id="acceptableLossPercentage" step="0.01" required><br>
+
+    <button onclick="calculateStopLoss()">計算</button>
+
+    <div id="result"></div>
+</body>
+</html>
