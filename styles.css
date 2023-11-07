@@ -61,5 +61,6 @@ button:hover {
 }
 
 #result {
-    font-size: 36px;
+    font-size: 28px;
+    white-space: pre; /* white-spaceを設定して、改行を有効にする */
 }
