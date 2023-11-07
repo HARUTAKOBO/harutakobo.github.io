@@ -21,7 +21,7 @@ body {
 
 input, button {
     margin: 10px;
-    width: 80%;
+    width: 100%;
     padding: 20px;
     font-size: 20px;
     border: 1px solid #ccc;
