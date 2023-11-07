@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>利息計算ツール</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>利息計算アプリ</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>利息計算ツール</h1>
-        <form id="calculator-form">
+        <h1>利息計算アプリ</h1>
+        <form id="calc-form">
             <label for="x">元金:</label>
-            <input type="number" id="x" step="0.01" required>
-            <br>
+            <input type="number" id="x" step="0.01"><br>
             <label for="y">利率(％):</label>
-            <input type="number" id="y" step="0.01" required>
-            <br>
-            <br>
+            <input type="number" id="y" step="0.01"><br>
             <button type="button" id="calculate-button">計算</button>
         </form>
-        <div id="result" class="hidden">
-            <p>結果:</p>
-            <span id="calculation-result"></span>
-        </div>
+        <p id="result"></p>
     </div>
     <script src="script.js"></script>
 </body>
