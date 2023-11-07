@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const y = parseFloat(yInput.value);
         if (!isNaN(x) && !isNaN(y)) {
             const result = (x * (1 + 0.00015282 * y)).toFixed(2);
-            resultElement.textContent = `税引後<br>${result}`; // 結果を改行して表示
+            resultElement.textContent = `税引後\n${result}`; // 結果を改行して表示
         } else {
             resultElement.textContent = "有効な数値を入力してください。";
         }
