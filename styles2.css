@@ -1,5 +1,9 @@
 /* styles.css */
-
+@media screen and (max-width: 600px) {
+    input, button {
+        width: 90%; /* スマートフォンの幅に合わせて調整 */
+    }
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
