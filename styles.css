@@ -38,6 +38,18 @@ input {
     width: 80%; /* 幅を80%に変更 */
 }
 
+/* 既存のスタイルを追加 */
+
+button {
+    margin: 10px;
+    display: inline-block; /* ボタンをインラインブロックに設定 */
+    width: auto; /* 幅を自動調整 */
+    padding: 15px; /* パディングを増やす */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 button {
     background-color: #007bff;
     color: #fff;
