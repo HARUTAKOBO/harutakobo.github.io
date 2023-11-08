@@ -2,8 +2,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>利息計算アプリ</title>
+    <title>数独ゲームと利息計算アプリ</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="sudoku.css">
 </head>
 <body>
     <div class="container">
@@ -17,16 +18,23 @@
         </form>
         <p id="result"></p>
         
-        <!-- ここに新しいHTMLを追加 -->
+        <!-- 数独ゲームのセクションを追加 -->
+        <h2>数独ゲーム</h2>
+        <div id="sudoku-grid"></div>
+        <button onclick="solve()">解く</button>
+        <button onclick="resetGrid()">リセット</button>
+        <!-- 数独ゲームのセクションここまで -->
+        
+        <!-- その他のコンテンツのセクション -->
         <div id="additional-content">
             <h2>その他のコンテンツ</h2>
             <p>損切りルール計算アプリ</p>
-            <a href="損切りルール計算機.html">損切りルール計算機</a>
+            <a href="損切りルール計算機.html">損切りルール計算機へ</a>
         </div>
-        <!-- 新しいHTML追加ここまで -->
+        <!-- その他のコンテンツのセクションここまで -->
         
     </div>
     <script src="script.js"></script>
-
+    <script src="sudoku.js"></script>
 </body>
 </html>
