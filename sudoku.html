@@ -2,16 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数独ソルバー</title>
     <link rel="stylesheet" href="sudoku.css">
 </head>
 <body>
-    <h1>数独ソルバー</h1>
-    <div id="sudoku-grid" class="grid">
-        <!-- グリッドはJavaScriptで生成されます -->
-    </div>
+    <div id="sudoku-grid"></div>
     <button onclick="solve()">解く</button>
+    <button onclick="resetGrid()">リセット</button>
     <script src="sudoku.js"></script>
 </body>
 </html>
+
