@@ -1,56 +1,29 @@
-/* 数独ゲーム用スタイル */
-#sudoku-container {
-    max-width: 540px; /* 数独グリッドの最大幅を設定 */
-    margin: 20px auto; /* 中央揃えにするためのマージン */
-}
-
 #sudoku-grid {
     display: grid;
-    grid-template-columns: repeat(9, 1fr); /* 9列 */
-    gap: 2px; /* セル間の隙間 */
-    border: 3px solid #000; /* 外枠の太さと色 */
-    margin-bottom: 20px; /* 下部に余白を設ける */
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 5px;
+    max-width: 450px;
+    margin: auto;
 }
 
-/* 数独の各セルのスタイル */
-#sudoku-grid input {
-    width: 100%; /* セルの幅 */
-    height: 50px; /* セルの高さ */
-    border: 1px solid #ddd; /* セルの境界線のスタイル */
+.cell {
+    width: 50px;
+    height: 50px;
     text-align: center;
-    font-size: 18px; /* テキストのサイズ */
+    font-size: 20px;
+    border: 1px solid #ddd;
 }
 
-/* サブグリッドの境界線を強調 */
-#sudoku-grid input:nth-child(3n) {
-    border-right: 3px solid #000;
-}
-
-#sudoku-grid input:nth-child(27n), #sudoku-grid input:nth-child(27n + 1), #sudoku-grid input:nth-child(27n + 2) {
-    border-bottom: 3px solid #000;
-}
-
-/* ボタンのスタイル */
-button {
-    padding: 10px 20px; /* パディング */
-    font-size: 1em; /* テキストのサイズ */
-    cursor: pointer; /* ホバー時のカーソルをポインタに */
-    margin: 5px; /* ボタン間の余白 */
-}
-
-/* スマートフォン用のスタイル */
-@media (max-width: 600px) {
-    #sudoku-container {
-        margin: 10px;
+/* スマートフォン表示の対応 */
+@media (max-width: 500px) {
+    #sudoku-grid {
+        grid-gap: 3px;
+        max-width: 90vw;
     }
 
-    #sudoku-grid input {
-        height: 40px; /* スマートフォンではセルの高さを小さくする */
-        font-size: 3vw; /* フォントサイズをビューポートに依存させる */
-    }
-
-    button {
-        font-size: 4vw; /* スマートフォンではボタンのフォントサイズを小さくする */
-        padding: 5px 10px;
+    .cell {
+        width: 10vw; /* viewportの幅に基づいてセルの幅を設定 */
+        height: 10vw;
+        font-size: 5vw;
     }
 }
