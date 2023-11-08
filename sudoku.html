@@ -2,13 +2,17 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>数独ソルバー</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独ゲーム</title>
     <link rel="stylesheet" href="sudoku.css">
 </head>
 <body>
-    <div id="sudoku-grid"></div>
-    <button onclick="solve()">解く</button>
-    <button onclick="resetGrid()">リセット</button>
+    <div id="sudoku-container">
+        <h1>数独ゲーム</h1>
+        <div id="sudoku-grid"></div>
+        <button id="solve-button">解く</button>
+        <button id="reset-button">リセット</button>
+    </div>
     <script src="sudoku.js"></script>
 </body>
 </html>
