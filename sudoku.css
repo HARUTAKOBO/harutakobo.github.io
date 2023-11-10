@@ -1,22 +1,53 @@
+/* 基本スタイル */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f7f7f7;
+}
+
 .sudoku {
   display: grid;
-  grid-template-columns: repeat(9, 50px);
-  grid-template-rows: repeat(9, 50px);
-  gap: 1px;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 1px;
+  max-width: 90vw;
+  margin: auto;
 }
 
 .sudoku-cell {
   border: 1px solid #000;
-  width: 50px;
-  height: 50px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vw; /* スマホでの可読性を確保 */
+  user-select: none; /* セルのテキスト選択を防ぐ */
 }
 
 /* 3x3のセクションの境界を太くする */
-.sudoku-cell:nth-child(3n), .sudoku-cell:nth-last-child(3n) {
+.sudoku .sudoku-cell:nth-child(3n) {
   border-right-width: 3px;
 }
 
-.sudoku-cell:nth-child(27n), .sudoku-cell:nth-child(54n), .sudoku-cell:nth-child(81n) {
+.sudoku .sudoku-cell:nth-child(27n), .sudoku .sudoku-cell:nth-child(54n), .sudoku .sudoku-cell:nth-child(81n) {
   border-bottom-width: 3px;
 }
 
+/* タブレット以上のサイズでセルのサイズを調整 */
+@media (min-width: 600px) {
+  .sudoku-cell {
+    font-size: 3vw; /* フォントサイズを調整 */
+  }
+}
+
+/* デスクトップサイズでの調整 */
+@media (min-width: 900px) {
+  .sudoku {
+    max-width: 450px; /* グリッドの最大幅を設定 */
+  }
+  .sudoku-cell {
+    font-size: 2vw; /* フォントサイズを調整 */
+  }
+}
