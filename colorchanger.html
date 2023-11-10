@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像色変換アプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        #selectedImage {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #selectButton {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #convertButton {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #downloadLink {
+            display: none;
+            color: #007bff;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>画像色変換アプリ</h1>
+    <div class="buttons">
+        <label for="imageInput" id="selectLabel"></label>
+        <input type="file" id="imageInput" accept="image/*">
+        <br>
+        <button id="selectButton" onclick="selectImage()">選択</button>
+        <button id="convertButton" onclick="convertImage()">変換</button>
+    </div>
+    <br>
+    <img id="selectedImage" src="" alt="選択した画像">
+    <br>
+    <img id="outputImage" src="" alt="変換後の画像">
+    <br>
+    <a id="downloadLink" href="" download="output_image.png">ダウンロード</a>
+    
+    <script>
+        let selectedFile = null;
+
+        function selectImage() {
+            const input = document.getElementById('imageInput');
+            input.click(); // ファイル選択ダイアログを表示する
+        }
+
+        function handleFileSelect(event) {
+            selectedFile = event.target.files[0];
+            if (selectedFile) {
+                const convertButton = document.getElementById('convertButton');
+                convertButton.removeAttribute('disabled');
+
+                const selectLabel = document.getElementById('selectLabel');
+                selectLabel.textContent = '画像を選択済み';
+                selectLabel.style.color = '#28a745';
+
+                const selectedImage = document.getElementById('selectedImage');
+                selectedImage.src = URL.createObjectURL(selectedFile);
+
+                const selectButton = document.getElementById('selectButton');
+                selectButton.style.display = 'none';
+                convertButton.style.display = 'block';
+            }
+        }
+
+        function convertImage() {
+            if (!selectedFile) {
+                alert('ファイルを選択してください。');
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    for (let i = 0; i < imageData.data.length; i += 4) {
+                        const r = imageData.data[i];
+                        const g = imageData.data[i + 1];
+                        const b = imageData.data[i + 2];
+                        const a = imageData.data[i + 3];
+
+                        // RGBA(0,0,0,0)以外の色をすべてRGBA(255,0,0,100)に変更
+                        if (r !== 0 || g !== 0 || b !== 0 || a !== 0) {
+                            imageData.data[i] = 255; // R
+                            imageData.data[i + 1] = 0; // G
+                            imageData.data[i + 2] = 0; // B
+                            imageData.data[i + 3] = 100; // A
+                        }
+                    }
+
+                    ctx.putImageData(imageData, 0, 0);
+
+                    const convertedImageDataUrl = canvas.toDataURL('image/png'); // 画像をPNGとして保存
+                    const outputImage = document.getElementById('outputImage');
+                    outputImage.src = convertedImageDataUrl;
+
+                    // ダウンロードリンクを表示
+                    const downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = convertedImageDataUrl;
+                    downloadLink.style.display = 'block';
+                };
+
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+
+        // ファイル選択用のイベントリスナーを設定
+        const imageInput = document.getElementById('imageInput');
+        imageInput.addEventListener('change', handleFileSelect);
+    </script>
+</body>
+</html>
