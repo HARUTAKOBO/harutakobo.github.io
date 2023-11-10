@@ -1,4 +1,4 @@
-.sudoku-grid {
+.sudoku {
   display: grid;
   grid-template-columns: repeat(9, 50px);
   grid-template-rows: repeat(9, 50px);
@@ -19,3 +19,4 @@
 .sudoku-cell:nth-child(27n), .sudoku-cell:nth-child(54n), .sudoku-cell:nth-child(81n) {
   border-bottom-width: 3px;
 }
+
