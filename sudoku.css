@@ -12,7 +12,8 @@ body {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-gap: 1px;
-  max-width: 90vw;
+  width: 90vw; /* グリッドの幅をビューポートの90%に */
+  max-width: 400px; /* 最大幅を400pxに設定 */
   margin: auto;
 }
 
@@ -22,32 +23,35 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 5vw; /* スマホでの可読性を確保 */
+  font-size: 16px; /* フォントサイズを16pxに設定 */
   user-select: none; /* セルのテキスト選択を防ぐ */
 }
 
 /* 3x3のセクションの境界を太くする */
 .sudoku .sudoku-cell:nth-child(3n) {
-  border-right-width: 3px;
+  border-right-width: 2px;
 }
 
 .sudoku .sudoku-cell:nth-child(27n), .sudoku .sudoku-cell:nth-child(54n), .sudoku .sudoku-cell:nth-child(81n) {
-  border-bottom-width: 3px;
+  border-bottom-width: 2px;
 }
 
 /* タブレット以上のサイズでセルのサイズを調整 */
 @media (min-width: 600px) {
+  .sudoku {
+    max-width: 500px; /* グリッドの最大幅を500pxに設定 */
+  }
   .sudoku-cell {
-    font-size: 3vw; /* フォントサイズを調整 */
+    font-size: 20px; /* フォントサイズを20pxに設定 */
   }
 }
 
 /* デスクトップサイズでの調整 */
 @media (min-width: 900px) {
   .sudoku {
-    max-width: 450px; /* グリッドの最大幅を設定 */
+    max-width: 550px; /* グリッドの最大幅を550pxに設定 */
   }
   .sudoku-cell {
-    font-size: 2vw; /* フォントサイズを調整 */
+    font-size: 24px; /* フォントサイズを24pxに設定 */
   }
 }
