@@ -26,6 +26,7 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* 入力欄をセンタリング */
         }
 
         label {
@@ -34,11 +35,12 @@
         }
 
         .input-field {
-            width: 100%;
+            width: 80%; /* 画面幅の80%に調整 */
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 10px auto; /* センタリング */
             border: 1px solid #ccc;
             border-radius: 5px;
+            text-align: center; /* テキストをセンタリング */
         }
 
         .asset-input {
@@ -51,7 +53,7 @@
             background-color: #007BFF;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 15px 30px; /* 大きくしました */
             cursor: pointer;
         }
 
@@ -155,7 +157,7 @@
                 resultDiv.innerHTML += `<p>${assetData.Asset}: $${assetData.USD} (${assetData.JPY}円) - ${assetData.Shares}口</p>`;
             }
         }
-        
+
         // 各資産の金額（USD）を設定
         var assetPrices = {
             'VWO': 40.39,
