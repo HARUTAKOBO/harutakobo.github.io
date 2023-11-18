@@ -12,12 +12,13 @@
             background-color: #f4f4f4;
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
             background-color: #007BFF;
             color: #fff;
-            padding: 20px 0;
+            padding: 10px 0;
             margin: 0;
+            margin-bottom: 20px;
         }
 
         .container {
@@ -26,25 +27,21 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: center; /* 入力欄をセンタリング */
         }
 
         label {
             font-weight: bold;
             display: block;
+            margin-top: 10px;
         }
 
-        .input-field {
-            width: 80%; /* 画面幅の80%に調整 */
+        .input-field, select {
+            width: 100%;
             padding: 10px;
-            margin: 10px auto; /* センタリング */
+            margin-top: 5px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            text-align: center; /* テキストをセンタリング */
-        }
-
-        .asset-input {
-            margin-bottom: 10px;
         }
 
         button {
@@ -53,7 +50,7 @@
             background-color: #007BFF;
             color: #fff;
             border: none;
-            padding: 15px 30px; /* 大きくしました */
+            padding: 10px 20px;
             cursor: pointer;
         }
 
@@ -66,67 +63,78 @@
 <body>
     <h1>投資ポートフォリオ計算器</h1>
     <div class="container">
-        <!-- 為替レート入力フォーム -->
         <label for="exchangeRate">為替レート(USD/JPY):</label>
         <input type="number" id="exchangeRate" class="input-field" placeholder="為替レートを入力" value="149.65">
         
-        <!-- 投資金額入力フォーム -->
         <label for="investmentAmountJPY">投資金額(円):</label>
         <input type="number" id="investmentAmountJPY" class="input-field" placeholder="投資金額を入力" value="100000">
         
-        <!-- 資産割合入力フォーム -->
+        <h2>スケーリング資産:</h2>
+        <label for="scalingAsset">基準となる資産:</label>
+        <select id="scalingAsset" class="input-field">
+            <option value="VWO">VWO</option>
+            <option value="HYG">HYG</option>
+            <option value="GLD">GLD</option>
+            <option value="BND">BND</option>
+            <option value="VTI" selected>VTI</option>
+            <option value="CASH">CASH</option>
+        </select>
+        <label for="scalingShares">基準口数:</label>
+        <input type="number" id="scalingShares" class="input-field" placeholder="口数を入力" value="1">
+
         <h2>資産割合(%):</h2>
         <div class="asset-input">
             <label for="VWO">新興市場株(VWO):</label>
             <input type="number" id="VWO" class="input-field" placeholder="45" value="45">
         </div>
-        
         <div class="asset-input">
             <label for="HYG">ハイイールド債(HYG):</label>
             <input type="number" id="HYG" class="input-field" placeholder="17" value="17">
         </div>
-        
         <div class="asset-input">
             <label for="GLD">金(GLD):</label>
             <input type="number" id="GLD" class="input-field" placeholder="15" value="15">
         </div>
-        
         <div class="asset-input">
             <label for="BND">総合債券市場(BND):</label>
             <input type="number" id="BND" class="input-field" placeholder="12" value="12">
         </div>
-        
         <div class="asset-input">
             <label for="VTI">全米株式市場(VTI):</label>
             <input type="number" id="VTI" class="input-field" placeholder="7" value="7">
         </div>
-        
         <div class="asset-input">
             <label for="CASH">現金(CASH):</label>
             <input type="number" id="CASH" class="input-field" placeholder="4" value="4">
         </div>
         
-        <!-- 計算ボタン -->
         <button onclick="calculateAllocation()">計算する</button>
-        
-        <!-- 結果表示エリア -->
         <div id="result"></div>
     </div>
 
     <script>
+        var assetPrices = {
+            'VWO': 40.39,
+            'HYG': 74.77,
+            'GLD': 183.67,
+            'BND': 70.64,
+            'VTI': 223.11,
+            'CASH': 1
+        };
+
         function calculateAllocation() {
             var exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
             var investmentAmountJPY = parseFloat(document.getElementById('investmentAmountJPY').value);
-            
-            if (isNaN(exchangeRate) || isNaN(investmentAmountJPY)) {
-                alert('正しい為替レートと投資金額(円)を入力してください。');
+            var scalingAsset = document.getElementById('scalingAsset').value;
+            var scalingShares = parseFloat(document.getElementById('scalingShares').value);
+
+            if (isNaN(exchangeRate) || isNaN(investmentAmountJPY) || isNaN(scalingShares)) {
+                alert('正しい為替レート、投資金額(円)、および基準口数を入力してください。');
                 return;
             }
             
-            // 投資金額をUSDに変換
             var investmentAmountUSD = investmentAmountJPY / exchangeRate;
             
-            // 資産割合を取得
             var assetAllocation = {
                 'VWO': parseFloat(document.getElementById('VWO').value) / 100,
                 'HYG': parseFloat(document.getElementById('HYG').value) / 100,
@@ -135,9 +143,8 @@
                 'VTI': parseFloat(document.getElementById('VTI').value) / 100,
                 'CASH': parseFloat(document.getElementById('CASH').value) / 100
             };
-            
-            // 各資産の金額と口数を計算
-            var allocation = [];
+
+            var allocation = [], adjustedAllocation = [];
             for (var asset in assetAllocation) {
                 var amountInUSD = investmentAmountUSD * assetAllocation[asset];
                 var shares = amountInUSD / assetPrices[asset];
@@ -148,27 +155,35 @@
                     Shares: shares.toFixed(2)
                 });
             }
-            
-            // 結果を表示
+
+            // スケーリングファクターの計算
+            var baseShares = investmentAmountUSD * assetAllocation[scalingAsset] / assetPrices[scalingAsset];
+            var scalingFactor = scalingShares / baseShares;
+
+            // 調整済みの結果の計算
+            for (var asset in assetAllocation) {
+                var amountInUSD = investmentAmountUSD * assetAllocation[asset];
+                var shares = amountInUSD / assetPrices[asset];
+                var adjustedShares = shares * scalingFactor;
+                adjustedAllocation.push({
+                    Asset: asset,
+                    AdjustedShares: adjustedShares.toFixed(2)
+                });
+            }
+
             var resultDiv = document.getElementById('result');
             resultDiv.innerHTML = '<h2>分配結果:</h2>';
             for (var i = 0; i < allocation.length; i++) {
                 var assetData = allocation[i];
                 resultDiv.innerHTML += `<p>${assetData.Asset}: $${assetData.USD} (${assetData.JPY}円) - ${assetData.Shares}口</p>`;
             }
+            resultDiv.innerHTML += '<h2>調整済の結果:</h2>';
+            for (var i = 0; i < adjustedAllocation.length; i++) {
+                var adjustedData = adjustedAllocation[i];
+                resultDiv.innerHTML += `<p>${adjustedData.Asset}: ${adjustedData.AdjustedShares}口 (調整後)</p>`;
+            }
         }
 
-        // 各資産の金額（USD）を設定
-        var assetPrices = {
-            'VWO': 40.39,
-            'HYG': 74.77,
-            'GLD': 183.67,
-            'BND': 70.64,
-            'VTI': 223.11,
-            'CASH': 1
-        };
-
-        // 3桁ごとにカンマを挿入する関数
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
