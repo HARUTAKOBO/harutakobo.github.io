@@ -30,6 +30,15 @@
 
         label {
             font-weight: bold;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .asset-input {
@@ -57,42 +66,42 @@
     <div class="container">
         <!-- 為替レート入力フォーム -->
         <label for="exchangeRate">為替レート(USD/JPY):</label>
-        <input type="number" id="exchangeRate" placeholder="為替レートを入力">
+        <input type="number" id="exchangeRate" class="input-field" placeholder="為替レートを入力" value="149.65">
         
         <!-- 投資金額入力フォーム -->
         <label for="investmentAmountJPY">投資金額(円):</label>
-        <input type="number" id="investmentAmountJPY" placeholder="投資金額を入力">
+        <input type="number" id="investmentAmountJPY" class="input-field" placeholder="投資金額を入力" value="100000">
         
         <!-- 資産割合入力フォーム -->
         <h2>資産割合(%):</h2>
         <div class="asset-input">
             <label for="VWO">新興市場株(VWO):</label>
-            <input type="number" id="VWO" placeholder="45">
+            <input type="number" id="VWO" class="input-field" placeholder="45" value="45">
         </div>
         
         <div class="asset-input">
             <label for="HYG">ハイイールド債(HYG):</label>
-            <input type="number" id="HYG" placeholder="17">
+            <input type="number" id="HYG" class="input-field" placeholder="17" value="17">
         </div>
         
         <div class="asset-input">
             <label for="GLD">金(GLD):</label>
-            <input type="number" id="GLD" placeholder="15">
+            <input type="number" id="GLD" class="input-field" placeholder="15" value="15">
         </div>
         
         <div class="asset-input">
             <label for="BND">総合債券市場(BND):</label>
-            <input type="number" id="BND" placeholder="12">
+            <input type="number" id="BND" class="input-field" placeholder="12" value="12">
         </div>
         
         <div class="asset-input">
             <label for="VTI">全米株式市場(VTI):</label>
-            <input type="number" id="VTI" placeholder="7">
+            <input type="number" id="VTI" class="input-field" placeholder="7" value="7">
         </div>
         
         <div class="asset-input">
             <label for="CASH">現金(CASH):</label>
-            <input type="number" id="CASH" placeholder="4">
+            <input type="number" id="CASH" class="input-field" placeholder="4" value="4">
         </div>
         
         <!-- 計算ボタン -->
