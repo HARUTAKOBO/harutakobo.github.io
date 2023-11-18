@@ -142,7 +142,7 @@
                 allocation.push({
                     Asset: asset,
                     USD: amountInUSD.toFixed(2),
-                    JPY: (amountInUSD * exchangeRate).toFixed(2),
+                    JPY: numberWithCommas((amountInUSD * exchangeRate).toFixed()),
                     Shares: shares.toFixed(2)
                 });
             }
@@ -165,6 +165,11 @@
             'VTI': 223.11,
             'CASH': 1
         };
+
+        // 3桁ごとにカンマを挿入する関数
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     </script>
 </body>
 </html>
