@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資ポートフォリオ計算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .asset-input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>投資ポートフォリオ計算器</h1>
+    <div class="container">
+        <!-- 為替レート入力フォーム -->
+        <label for="exchangeRate">為替レート(USD/JPY):</label>
+        <input type="number" id="exchangeRate" placeholder="為替レートを入力">
+        
+        <!-- 投資金額入力フォーム -->
+        <label for="investmentAmountJPY">投資金額(円):</label>
+        <input type="number" id="investmentAmountJPY" placeholder="投資金額を入力">
+        
+        <!-- 資産割合入力フォーム -->
+        <h2>資産割合(%)：</h2>
+        <div class="asset-input">
+            <label for="VWO">新興市場株(VWO):</label>
+            <input type="number" id="VWO" placeholder="45">
+        </div>
+        
+        <div class="asset-input">
+            <label for="HYG">ハイイールド債(HYG):</label>
+            <input type="number" id="HYG" placeholder="17">
+        </div>
+        
+        <div class="asset-input">
+            <label for="GLD">金(GLD):</label>
+            <input type="number" id="GLD" placeholder="15">
+        </div>
+        
+        <div class="asset-input">
+            <label for="BND">総合債券市場(BND):</label>
+            <input type="number" id="BND" placeholder="12">
+        </div>
+        
+        <div class="asset-input">
+            <label for="VTI">全米株式市場(VTI):</label>
+            <input type="number" id="VTI" placeholder="7">
+        </div>
+        
+        <div class="asset-input">
+            <label for="CASH">現金(CASH):</label>
+            <input type="number" id="CASH" placeholder="4">
+        </div>
+        
+        <!-- 計算ボタン -->
+        <button onclick="calculateAllocation()">計算する</button>
+        
+        <!-- 結果表示エリア -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateAllocation() {
+            var exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
+            var investmentAmountJPY = parseFloat(document.getElementById('investmentAmountJPY').value);
+            
+            if (isNaN(exchangeRate) || isNaN(investmentAmountJPY)) {
+                alert('正しい為替レートと投資金額(円)を入力してください。');
+                return;
+            }
+            
+            // 投資金額をUSDに変換
+            var investmentAmountUSD = investmentAmountJPY / exchangeRate;
+            
+            // 資産割合を取得
+            var assetAllocation = {
+                'VWO': parseFloat(document.getElementById('VWO').value) / 100,
+                'HYG': parseFloat(document.getElementById('HYG').value) / 100,
+                'GLD': parseFloat(document.getElementById('GLD').value) / 100,
+                'BND': parseFloat(document.getElementById('BND').value) / 100,
+                'VTI': parseFloat(document.getElementById('VTI').value) / 100,
+                'CASH': parseFloat(document.getElementById('CASH').value) / 100
+            };
+            
+            // 各資産の金額と口数を計算
+            var allocation = [];
+            for (var asset in assetAllocation) {
+                if (asset !== 'CASH') {
+                    var amountInUSD = investmentAmountUSD * assetAllocation[asset];
+                    var shares = amountInUSD / assetPrices[asset];
+                    allocation.push({
+                        Asset: asset,
+                        USD: amountInUSD.toFixed(2),
+                        JPY: (amountInUSD * exchangeRate).toFixed(2),
+                        Shares: shares.toFixed(2)
+                    });
+                } else {
+                    // CASHの口数は0口とする
+                    allocation.push({
+                        Asset: asset,
+                        USD: '0.00',
+                        JPY: '0.00',
+                        Shares: '0.00'
+                    });
+                }
+            }
+            
+            // 結果を表示
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<h2>分配結果:</h2>';
+            for (var i = 0; i < allocation.length; i++) {
+                var assetData = allocation[i];
+                resultDiv.innerHTML += `<p>${assetData.Asset}: $${assetData.USD} (${assetData.JPY}円) - ${assetData.Shares}口</p>`;
+            }
+        }
+        
+        // 各資産の金額（USD）を設定
+        var assetPrices = {
+            'VWO': 40.39,
+            'HYG': 74.77,
+            'GLD': 183.67,
+            'BND': 70.64,
+            'VTI': 223.11,
+            'CASH': 1
+        };
+    </script>
+</body>
+</html>
