@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Splitter</title>
+    <style>
+        textarea, div {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        div {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="codeInput" placeholder="ここにコードを入力..."></textarea>
+    <button onclick="splitCode()">分割</button>
+    <div id="htmlOutput">HTML結果</div>
+    <div id="cssOutput">CSS結果</div>
+    <div id="jsOutput">JavaScript結果</div>
+    <script>
+        function splitCode() {
+            var code = document.getElementById('codeInput').value;
+
+            // HTMLセクションを抽出
+            var htmlCode = code.replace(/<script.*?>[\s\S]*?<\/script>/ig, '')
+                               .replace(/<style.*?>[\s\S]*?<\/style>/ig, '');
+
+            // CSSセクションを抽出
+            var cssCode = code.match(/<style.*?>[\s\S]*?<\/style>/ig);
+            cssCode = cssCode ? cssCode.join('') : 'CSSなし';
+
+            // JavaScriptセクションを抽出
+            var jsCode = code.match(/<script.*?>[\s\S]*?<\/script>/ig);
+            jsCode = jsCode ? jsCode.join('') : 'JavaScriptなし';
+
+            // 結果を表示
+            document.getElementById('htmlOutput').innerText = htmlCode ? htmlCode : 'HTMLなし';
+            document.getElementById('cssOutput').innerText = cssCode;
+            document.getElementById('jsOutput').innerText = jsCode;
+        }
+    </script>
+</body>
+</html>
