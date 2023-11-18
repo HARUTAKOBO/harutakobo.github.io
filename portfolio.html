@@ -128,24 +128,14 @@
             // 各資産の金額と口数を計算
             var allocation = [];
             for (var asset in assetAllocation) {
-                if (asset !== 'CASH') {
-                    var amountInUSD = investmentAmountUSD * assetAllocation[asset];
-                    var shares = amountInUSD / assetPrices[asset];
-                    allocation.push({
-                        Asset: asset,
-                        USD: amountInUSD.toFixed(2),
-                        JPY: (amountInUSD * exchangeRate).toFixed(2),
-                        Shares: shares.toFixed(2)
-                    });
-                } else {
-                    // CASHの口数は0口とする
-                    allocation.push({
-                        Asset: asset,
-                        USD: '0.00',
-                        JPY: '0.00',
-                        Shares: '0.00'
-                    });
-                }
+                var amountInUSD = investmentAmountUSD * assetAllocation[asset];
+                var shares = amountInUSD / assetPrices[asset];
+                allocation.push({
+                    Asset: asset,
+                    USD: amountInUSD.toFixed(2),
+                    JPY: (amountInUSD * exchangeRate).toFixed(2),
+                    Shares: shares.toFixed(2)
+                });
             }
             
             // 結果を表示
