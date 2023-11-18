@@ -113,15 +113,6 @@
     </div>
 
     <script>
-        var assetPrices = {
-            'VWO': 40.39,
-            'HYG': 74.77,
-            'GLD': 183.67,
-            'BND': 70.64,
-            'VTI': 223.11,
-            'CASH': 1
-        };
-
         function calculateAllocation() {
             var exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
             var investmentAmountJPY = parseFloat(document.getElementById('investmentAmountJPY').value);
@@ -163,10 +154,11 @@
             // 調整済みの結果の計算
             for (var asset in assetAllocation) {
                 var amountInUSD = investmentAmountUSD * assetAllocation[asset];
-                var shares = amountInUSD / assetPrices[asset];
-                var adjustedShares = shares * scalingFactor;
+                var adjustedShares = (amountInUSD / assetPrices[asset]) * scalingFactor;
                 adjustedAllocation.push({
                     Asset: asset,
+                    USD: (adjustedShares * assetPrices[asset]).toFixed(2),
+                    JPY: numberWithCommas(((adjustedShares * assetPrices[asset]) * exchangeRate).toFixed()),
                     AdjustedShares: adjustedShares.toFixed(2)
                 });
             }
@@ -180,9 +172,18 @@
             resultDiv.innerHTML += '<h2>調整済の結果:</h2>';
             for (var i = 0; i < adjustedAllocation.length; i++) {
                 var adjustedData = adjustedAllocation[i];
-                resultDiv.innerHTML += `<p>${adjustedData.Asset}: ${adjustedData.AdjustedShares}口 (調整後)</p>`;
+                resultDiv.innerHTML += `<p>${adjustedData.Asset}: $${adjustedData.USD} (${adjustedData.JPY}円) - ${adjustedData.AdjustedShares}口 (調整後)</p>`;
             }
         }
+
+        var assetPrices = {
+            'VWO': 40.39,
+            'HYG': 74.77,
+            'GLD': 183.67,
+            'BND': 70.64,
+            'VTI': 223.11,
+            'CASH': 1
+        };
 
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
